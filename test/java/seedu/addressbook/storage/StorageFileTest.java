@@ -52,7 +52,7 @@ public class StorageFileTest {
         thrown.expect(StorageOperationException.class);
         storage.load();
     }
-
+    
     @Test
     public void load_validFormat() throws Exception {
         AddressBook actualAB = getStorage("ValidData.xml").load();
@@ -89,7 +89,15 @@ public class StorageFileTest {
 
         assertStorageFilesEqual(storage, getStorage("ValidData.xml"));
     }
-
+    //checks if the system can detect if file is read-only
+    @Test
+    public void save_readOnly_exceptionThrown() throws Exception {
+        AddressBook ab = getTestAddressBook();
+        StorageFile storage = getTempStorage();
+        storage.setReadOnly();
+        thrown.expect(SecurityException.class);
+        storage.save(ab);
+    }
     // getPath() method in StorageFile class is trivial so it is not tested
 
     /**

@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static java.nio.file.Files.isWritable;
+
 /**
  * Represents the file used to store address book data.
  */
@@ -104,11 +106,14 @@ public class StorageFile {
             final Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             marshaller.marshal(toSave, fileWriter);
+            isWritable( path );
 
         } catch (IOException ioe) {
             throw new StorageOperationException("Error writing to file: " + path);
         } catch (JAXBException jaxbe) {
             throw new StorageOperationException("Error converting address book into storage format");
+        }  catch (SecurityException e) {
+            throw new StorageOperationException("This file at "+ path +" may not be writable. Please try another file. ");
         }
     }
 
