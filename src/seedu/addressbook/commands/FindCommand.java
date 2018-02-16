@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
@@ -17,7 +18,7 @@ public class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
@@ -41,6 +42,17 @@ public class FindCommand extends Command {
     }
 
     /**
+     * Converts the Hash Set to upper case
+     * @param convertedSet
+     * @return
+     */
+    public Set<String> convertToUpper(Set<String> convertedSet) {
+        return convertedSet.stream()
+                            .map(String::toUpperCase)
+                            .collect(Collectors.toSet());
+
+    }
+    /**
      * Retrieves all persons in the address book whose names contain some of the specified keywords.
      *
      * @param keywords for searching
@@ -50,7 +62,7 @@ public class FindCommand extends Command {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            if (!Collections.disjoint(convertToUpper(wordsInName), convertToUpper(keywords))) {
                 matchedPersons.add(person);
             }
         }

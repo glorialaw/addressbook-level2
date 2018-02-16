@@ -92,9 +92,6 @@ public class Parser {
         case SortCommand.COMMAND_WORD:
             return new SortCommand();
 
-        case DummyDataCommand.COMMAND_WORD:
-            //return new DummyDataCommand();
-
         case HelpCommand.COMMAND_WORD: // Fallthrough
 
         default:
