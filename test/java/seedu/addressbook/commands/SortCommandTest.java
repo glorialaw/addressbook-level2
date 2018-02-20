@@ -17,7 +17,7 @@ public class SortCommandTest {
     @Test
     public void execute() throws IllegalValueException {
         //Already sorted list: matched
-        assertFindCommandBehavior(caseOneList, sortedList;
+        assertFindCommandBehavior(caseOneList, sortedList);
 
         //Reverse order: matched
         assertFindCommandBehavior(caseTwoList, sortedList);
