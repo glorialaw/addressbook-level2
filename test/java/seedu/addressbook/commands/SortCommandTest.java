@@ -17,10 +17,10 @@ public class SortCommandTest {
     @Test
     public void execute() throws IllegalValueException {
         //Already sorted list: matched
-        assertFindCommandBehavior(caseOneList, sortedList);
+        assertSortCommandBehavior(caseOneList, sortedList);
 
         //Reverse order: matched
-        assertFindCommandBehavior(caseTwoList, sortedList);
+        assertSortCommandBehavior(caseTwoList, sortedList);
 
     }
 
@@ -29,7 +29,7 @@ public class SortCommandTest {
      * the result matches the sorted list exactly.
      */
 
-    private void assertFindCommandBehavior(List<ReadOnlyPerson> testingList, List<ReadOnlyPerson> expectedPersonList) {
+    private void assertSortCommandBehavior(List<ReadOnlyPerson> testingList, List<ReadOnlyPerson> expectedPersonList) {
         SortCommand command = createSortCommand(testingList);
         CommandResult result = command.execute();
 
